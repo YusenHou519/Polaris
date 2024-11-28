@@ -7,8 +7,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'Polaris'
-copyright = '2024, Yusen Hou, Ynalin Zhang'
-author = 'Yusen Hou, Ynalin Zhang'
+copyright = '2024, Yusen Hou, Yanlin Zhang'
+author = 'Yusen Hou, Yanlin Zhang'
 release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
