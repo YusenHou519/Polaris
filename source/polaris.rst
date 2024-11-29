@@ -25,25 +25,14 @@ The name **Polaris** reflects its role as the "North Star" in the analysis of ch
 
 --------------------------------------------------------------------------------
 
-.. figure:: _static/logo03.png
+.. figure:: _static/logo01.png
    :alt: Polaris Logo
-   :width: 700px
-   :height: 175px
+   :width: 614px
+   :height: 506px
    :align: center
 
 
-   Pre-training, fine-tuning, and application on bulk contact maps of Polaris.
-
--------------------------------------------------------------------------------------
-
-.. figure:: _static/logo04.png
-   :alt: Polaris Logo
-   :width: 509px
-   :height: 90px
-   :align: center
-
-
-   Application on single-cell contact maps of Polaris.
+   Overview of the Polaris neural network for loop scoring.
 
 --------------------------------------------------------------------------------------
 
@@ -90,7 +79,7 @@ If you have data in formats such as `.pairs` or `.cool`, you can convert them to
 
       cooler zoomify <input.cool>
 
-The resulting `.mcool` file can be directly used as input for Polaris.
+The resulting ``.mcool`` file can be directly used as input for Polaris.
 
 polaris loop
 ~~~~~~~~~~~~~~~~~
@@ -106,67 +95,13 @@ This is the simplest approach, allowing you to directly predict loops in a singl
 
    polaris loop pred -i [input.mcool] -o [save_path.bedpe] [options]
 
-.. list-table::
-   :header-rows: 1
-   :widths: auto
+Key Options:
 
-   * - Option
-     - Description
-     - Default Value
-   * - ``--batchsize INTEGER``
-     - Batch size for processing data. Adjust this based on available memory.
-     - ``128``
-   * - ``--cpu BOOLEAN``
-     - Use CPU for computation. Set to ``True`` to force CPU usage.
-     - ``False``
-   * - ``--gpu TEXT``
-     - Comma-separated GPU indices to use. If not specified, GPUs will be auto-selected.
-     - ``auto select``
-   * - ``--chrom TEXT``
-     - Comma-separated list of chromosomes for loop calling.
-     - None
-   * - ``-t INTEGER``
-     - Number of CPU threads to use. Adjust for optimal performance on your system.
-     - ``16``
-   * - ``--max_distance INTEGER``
-     - Maximum genomic distance (in base pairs) between contact pairs to consider.
-     - None
-   * - ``--resol INTEGER``
-     - Resolution of the Hi-C contact map (in base pairs).
-     - None
-   * - ``--modelstate TEXT``
-     - Path to the trained model state file.
-     - None
-   * - ``--dc INTEGER``
-     - Distance cutoff (in bins) for local density calculation. Larger values may account for more dispersed loops.
-     - ``5``
-   * - ``--minscore FLOAT``
-     - Minimum loopScore threshold to consider a pixel as a loop candidate.
-     - ``0.6``
-   * - ``--radius INTEGER``
-     - Radius for KDTree to remove outliers (in bins). Use larger values for sparser datasets.
-     - ``2``
-   * - ``--mindelta FLOAT``
-     - Minimum distance allowed between two predicted loops.
-     - ``5``
-   * - ``--refine BOOLEAN``
-     - Refine the predicted loops. It is recommended to always set this to ``True``.
-     - ``True``
-   * - ``-i, --input TEXT``
-     - Path to the input Hi-C contact map file.
-     - **Required**
-   * - ``-o, --output TEXT``
-     - Path to the ``.bedpe`` file where the predicted loops will be saved.
-     - **Required**
-   * - ``--help``
-     - Display help information about this command and exit.
-     - None
-
-Key Parameters:
-
-- ``chrom``: Specifies the chromosomes for loop calling, provided as a comma-separated string.
-- ``batchsize``: Defines the batch size used for prediction. Adjust based on available computational resources.
-- ``resol``: Resolution of the input contact map.
+- ``-i, --input``: Path to a ``.mcool`` contact map file.
+- ``-o, --output``: Path to the ``.bedpe`` file where the predicted loops will be saved.
+- ``--chrom``: Specifies the chromosomes for loop calling, provided as a comma-separated string.
+- ``--batchsize``: Defines the batch size used for prediction. Adjust based on available computational resources.
+- ``--resol``: Resolution of the input contact map.
 
 This command processes the input .mcool file and outputs the identified chromatin loops directly.
 
@@ -183,46 +118,14 @@ Run the following command to calculate the loop score for each pixel in the inpu
 
    polaris loop score -i [input.mcool] -o [loopscore.bedpe] [options]
 
-.. list-table::
-   :header-rows: 1
-   :widths: auto
+Key Options:
 
-   * - Option
-     - Description
-     - Default Value
-   * - ``--batchsize INTEGER``
-     - Batch size for processing data. Adjust this based on available memory.
-     - ``128``
-   * - ``--cpu BOOLEAN``
-     - Use CPU for computation. Set to ``True`` to force CPU usage.
-     - ``False``
-   * - ``--gpu TEXT``
-     - Comma-separated GPU indices to use. If not specified, GPUs will be auto-selected.
-     - ``auto select``
-   * - ``--chrom TEXT``
-     - Comma-separated list of chromosomes for loop candidate scoring.
-     - None
-   * - ``-t INTEGER``
-     - Number of CPU threads to use. Adjust for optimal performance on your system.
-     - ``16``
-   * - ``--max_distance INTEGER``
-     - Maximum genomic distance (in base pairs) between contact pairs to consider.
-     - None
-   * - ``--resol INTEGER``
-     - Resolution of the Hi-C contact map (in base pairs).
-     - None
-   * - ``--modelstate TEXT``
-     - Path to the trained model state file.
-     - None
-   * - ``-i, --input TEXT``
-     - Path to the input Hi-C contact map file.
-     - **Required**
-   * - ``-o, --output TEXT``
-     - Path to the ``.bedpe`` file where the loop candidates (with loop scores) will be saved.
-     - **Required**
-   * - ``--help``
-     - Display help information about this command and exit.
-     - None
+- ``-i, --input``: Path to a ``.mcool`` contact map file.
+- ``-o, --output``: Path to the ``.bedpe`` file where the loop scores will be saved.
+- ``--chrom``: Specifies the chromosomes for loop calling, provided as a comma-separated string.
+- ``--batchsize``: Defines the batch size used for prediction. Adjust based on available computational resources.
+- ``--resol``: Resolution of the input contact map.
+
 
 **Step 2: Call Loops from Loop Candidates**
 
@@ -232,46 +135,11 @@ Use the generated loop score file to identify loops by clustering:
 
    polaris loop pool -i [loopscore.bedpe] -o [loops.bedpe] [options]
 
-.. list-table::
-   :header-rows: 1
-   :widths: auto
+Key Options:
 
-   * - Option
-     - Description
-     - Default Value
-   * - ``--dc INTEGER``
-     - Distance cutoff (in bins) for local density calculation. Larger values may account for more dispersed loops.
-     - ``5``
-   * - ``--minscore FLOAT``
-     - Minimum loopScore threshold to consider a loop candidate as a valid loop.
-     - ``0.6``
-   * - ``--resol INTEGER``
-     - Resolution of the Hi-C contact map (in base pairs).
-     - ``5000``
-   * - ``--radius INTEGER``
-     - Radius for KDTree to remove outliers (in bins). Use larger values for sparser datasets.
-     - ``2``
-   * - ``--mindelta FLOAT``
-     - Minimum distance allowed between two predicted loops.
-     - ``5``
-   * - ``--refine BOOLEAN``
-     - Refine the predicted loops. It is recommended to always set this to ``True``.
-     - ``True``
-   * - ``-i, --candidates TEXT``
-     - Path to the input loop candidates file (usually the output from `polaris loop score`).
-     - **Required**
-   * - ``-o, --output TEXT``
-     - Path to the ``.bedpe`` file where the final loops will be saved.
-     - **Required**
-   * - ``--help``
-     - Display help information about this command and exit.
-     - None
-
-Key Parameters:
-
-- ``chrom``: Specifies the chromosomes for loop calling, provided as a comma-separated string.
-- ``batchsize``: Defines the batch size used for prediction. Adjust based on available computational resources.
-- ``resol``: Resolution of the input contact map.
+- ``-i, --input``: Path to the input loop candidates file.
+- ``-o, --output``: Path to the ``.bedpe`` file where the final loops will be saved.
+- ``--resol``: Resolution of the input file.
 
 polaris util
 ~~~~~~~~~~~~~~~~~
@@ -285,24 +153,12 @@ The `cool2bcool` utility converts a `.mcool` file to a `.bcool` file. The `.bcoo
 
 .. code-block:: bash
 
-   polaris util cool2bcool [OPTIONS] COOL BCOOL
+   polaris util cool2bcool [OPTIONS] MCOOL BCOOL
 
-.. list-table::
-   :header-rows: 1
-   :widths: auto
+Key Arguments:
 
-   * - Option
-     - Description
-     - Default Value
-   * - ``-u INTEGER``
-     - Distance upper bound in base pairs.
-     - ``3000000``
-   * - ``--resol TEXT``
-     - Comma-separated resolutions for the output.
-     - None
-   * - ``--help``
-     - Show help message and exit.
-     - None
+- ``MCOOL``: Path to the input ``.mcool`` file.
+- ``BCOOL``: Path of the ``.bcool`` file to save.
 
 polaris util pileup
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -313,37 +169,10 @@ The `pileup` utility generates 2D pileup contact maps around given foci.
 
    polaris util pileup [OPTIONS] FOCI MCOOL
 
-.. list-table::
-   :header-rows: 1
-   :widths: auto
+Key Arguments:
 
-   * - Option
-     - Description
-     - Default Value
-   * - ``-w INTEGER``
-     - Window size in bins: (2w+1)x(2w+1).
-     - ``10``
-   * - ``--savefig TEXT``
-     - Save pileup plot to file.
-     - ``FOCI_pileup.png``
-   * - ``--p2ll BOOLEAN``
-     - Compute p2ll.
-     - ``False``
-   * - ``--mindistance INTEGER``
-     - Minimum distance in bins to skip, only for bedpe foci.
-     - ``2w+1``
-   * - ``--maxdistance INTEGER``
-     - Maximum distance in bins to skip, only for bedpe foci.
-     - ``1e9``
-   * - ``--resol INTEGER``
-     - Resolution.
-     - ``5000``
-   * - ``--oe BOOLEAN``
-     - O/E normalized.
-     - ``True``
-   * - ``--help``
-     - Show help message and exit.
-     - None
+- ``FOCI``: Path to the ``.bedpe`` file in the same format as Polaris output, containing loop loci.
+- ``MCOOL``: Path to the input ``.mcool`` file.
 
 Contact
 -----------

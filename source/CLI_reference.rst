@@ -7,17 +7,18 @@ Quick reference
 .. code-block:: bash
 
    polaris COMMAND [ARGS]...
-
+   
 .. list-table::
-   :widths: 20 80
-   :header-rows: 1
+    :widths: 20 80
+    :align: left
+    :header-rows: 1
 
-   * - command
-     - 
-   * - polaris loop
-     - Loop annotation commands
-   * - polaris util
-     - Analysis and visualization utilities
+    * - Command
+      -
+    * - `polaris loop`_
+      - Loop annotation commands.
+    * - `polaris util`_
+      - Analysis and visualization utilities.
 
 -------------------------------------------------
 
@@ -45,106 +46,349 @@ Choose a subcommand to predict loops directly or obtain loop score file first.
 ----
 
 polaris loop pred
-------------------
+^^^^^^^^^^^^^^^^^^
 
     This is the simplest approach, allowing to directly predict loops in a single step
-    Bin any text file or stream of pairs.
 
-    Pairs data need not be sorted. Accepts compressed files.
-    To pipe input from stdin, set PAIRS_PATH to '-'.
+    .. program:: cooler cload pairs
+    .. code-block:: shell
+
+        polaris loop pred -i [input.mcool] -o [save_path.bedpe] [options]
+
+    .. rubric:: Required Options
+            
+    .. option:: -i, --input: 
+        
+        Path to a ``.mcool`` contact map file.
+
+    .. option:: -o, --output: 
+    
+        Path to the ``.bedpe`` file where the predicted loops will be saved.
+
+    .. rubric:: Options
+
+    .. option:: --batchsize <int> 
+
+        Default: ``128``
+
+        Batch size for processing data. Adjust this based on available memory.
+
+    .. option:: --cpu <boolean> 
+
+        Default: ``False``
+
+        Use CPU for computation. Set to ``True`` to force CPU usage.
+
+    .. option:: --gpu <text> 
+
+        Default: ``None``
+
+        Comma-separated GPU indices to use. If not specified, GPUs will be auto-selected.
+
+    .. option:: --chrom <text>
+
+        Default: ``None``
+
+        Comma-separated list of chromosomes for loop calling. If not specified, all autosomes and chromosome X will be annotated.
+
+    .. option:: -t <int> 
+
+        Default: ``16``
+
+        Number of CPU threads to use. Adjust for optimal performance on your system.
+
+    .. option:: --max_distance <int>
+
+        Default: ``3000000``
+
+        Maximum genomic distance (in base pairs) between contact pairs to consider.
+
+    .. option:: --resol <int>
+
+        Default: ``5000``
+
+        Resolution of the input contact map.
+
+    .. option:: --dc <int> 
+
+        Default: ``5``
+
+        Distance cutoff (in bins) for local density calculation. Larger values may account for more dispersed loops.
+
+    .. option:: --minscore <float> 
+
+        Default: ``0.6``
+
+        Minimum loopScore threshold to consider a pixel as a loop candidate. Smaller values for more loops (Minimum value: 0.5).
+
+    .. option:: --radius <int> 
+
+        Default: ``2``
+
+        Radius for KDTree to remove outliers (in bins). Use larger values for sparser datasets.
+
+    .. option:: --mindelta <float> 
+
+        Default: ``5``
+
+        Minimum distance allowed between two predicted loops.
+
+    .. option:: --help
+
+        Display help information about this command and exit.
+
+----
+
+polaris loop score
+^^^^^^^^^^^^^^^^^^^
+    Calculate the loop score for each pixel in the input contact map.
+
+    .. code-block:: bash
+
+        polaris loop score -i [input.mcool] -o [loopscore.bedpe] [options]
+
+    .. rubric:: Required Options
+
+    .. option:: -i, --input: 
+
+        Path to the input Hi-C contact map file.
+
+    .. option:: -o, --output: 
+
+        Path to the ``.bedpe`` file where the loop scores will be saved.
+
+    .. rubric:: Options
+
+    .. option:: --batchsize <int> 
+
+        Default: ``128``
+
+        Batch size for processing data. Adjust this based on available memory.
+
+    .. option:: --cpu <boolean> 
+
+        Default: ``False``
+
+        Use CPU for computation. Set to ``True`` to force CPU usage.
+
+    .. option:: --gpu <text> 
+
+        Default: ``None``
+
+        Comma-separated GPU indices to use. If not specified, GPUs will be auto-selected.
+
+    .. option:: --chrom <text>
+
+        Default: ``None``
+
+        Comma-separated list of chromosomes for loop candidate scoring. If not specified, all autosomes and chromosome X will be annotated.
+
+    .. option:: -t <int> 
+
+        Default: ``16``
+
+        Number of CPU threads to use. Adjust for optimal performance on your system.
+
+    .. option:: --max_distance <int>
+
+        Default: ``3000000``
+
+        Maximum genomic distance (in base pairs) between contact pairs to consider.
+
+    .. option:: --resol <int>
+
+        Default: ``5000``
+
+        Resolution of the Hi-C contact map (in base pairs).
+
+    .. option:: --help
+
+        Display help information about this command and exit.
 
 
-    BINS : One of the following
 
-        <TEXT:INTEGER> : 1. Path to a chromsizes file, 2. Bin size in bp
+----
 
-        <TEXT> : Path to BED file defining the genomic bin segmentation.
+polaris loop pool
+^^^^^^^^^^^^^^^^^^^
+    Identify loops from loop candidates by clustering.
 
-    PAIRS_PATH : Path to contacts (i.e. read pairs) file.
+    .. code-block:: bash
 
-    COOL_PATH : Output COOL file path or URI.
+        polaris loop pool -i [loopscore.bedpe] -o [loops.bedpe] [options]
 
-.. program:: cooler cload pairs
-.. code-block:: shell
+    .. rubric:: Required Options
 
-    cooler cload pairs [OPTIONS] BINS PAIRS_PATH COOL_PATH
+    .. option:: -i, --candidates: 
 
-.. rubric:: Arguments
+        Path to the input loop candidates file.
 
-.. option:: BINS
+    .. option:: -o, --output: 
 
-    Required argument
+        Path to the ``.bedpe`` file where the final loops will be saved.
 
-.. option:: PAIRS_PATH
+    .. rubric:: Options
 
-    Required argument
+    .. option:: --dc <int> 
 
-.. option:: COOL_PATH
+        Default: ``5``
 
-    Required argument
+        Distance cutoff (in bins) for local density calculation. Larger values may account for more dispersed loops.
 
-.. rubric:: Options
+    .. option:: --minscore <float> 
 
-.. option:: --metadata <metadata>
+        Default: ``0.6``
 
-    Path to JSON file containing user metadata.
+        Minimum loopScore threshold to consider a loop candidate as a valid loop.
 
-.. option:: --assembly <assembly>
+    .. option:: --resol <int>
 
-    Name of genome assembly (e.g. hg19, mm10)
+        Default: ``5000``
 
-.. option:: -c1, --chrom1 <chrom1>
+        Resolution of the Hi-C contact map (in base pairs).
 
-    chrom1 field number (one-based)  [required]
+    .. option:: --radius <int> 
 
-.. option:: -p1, --pos1 <pos1>
+        Default: ``2``
 
-    pos1 field number (one-based)  [required]
+        Radius for KDTree to remove outliers (in bins). Use larger values for sparser datasets.
 
-.. option:: -c2, --chrom2 <chrom2>
+    .. option:: --mindelta <float> 
 
-    chrom2 field number (one-based)  [required]
+        Default: ``5``
 
-.. option:: -p2, --pos2 <pos2>
+        Minimum distance allowed between two predicted loops.
 
-    pos2 field number (one-based)  [required]
+    .. option:: --refine <boolean> 
 
-.. option:: --chunksize <chunksize>
+        Default: ``True``
 
-    Number of input lines to load at a time
+        Refine the predicted loops. It is recommended to always set this to ``True``.
 
-.. option:: -0, --zero-based
+    .. option:: --help
 
-    Positions are zero-based  [default: False]
+        Display help information about this command and exit.
 
-.. option:: --comment-char <comment_char>
 
-    Comment character that indicates lines to ignore.  [default: #]
+polaris util 
+-------------
 
-.. option:: -N, --no-symmetric-upper
+Utilities for analysis and visualization with ``.mcool`` files.
 
-    Create a complete square matrix without implicit symmetry. This allows for distinct upper- and lower-triangle values
+.. code-block:: bash
 
-.. option:: --input-copy-status <input_copy_status>
+   polaris util COMMAND [ARGS]...
 
-    Copy status of input data when using symmetric-upper storage. | `unique`: Incoming data comes from a unique half of a symmetric map, regardless of how the coordinates of a pair are ordered. `duplex`: Incoming data contains upper- and lower-triangle duplicates. All input records that map to the lower triangle will be discarded! | If you wish to treat lower- and upper-triangle input data as distinct, use the ``--no-symmetric-upper`` option.   [default: unique]
+.. rubric:: Commands
 
-.. option:: --field <field>
+.. hlist::
+  :columns: 2
 
-    Specify quantitative input fields to aggregate into value columns using the syntax ``--field <field-name>=<field-number>``. Optionally, append ``:`` followed by ``dtype=<dtype>`` to specify the data type (e.g. float), and/or ``agg=<agg>`` to specify an aggregation function different from sum (e.g. mean). Field numbers are 1-based. Passing 'count' as the target name will override the default behavior of storing pair counts. Repeat the ``--field`` option for each additional field.
+  * .. object:: cool2bcool
+  * .. object:: pileup
 
-.. option:: --temp-dir <temp_dir>
+----
 
-    Create temporary files in a specified directory. Pass ``-`` to use the platform default temp dir.
+polaris util cool2bcool
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. option:: --no-delete-temp
+The `cool2bcool` utility converts a `.mcool` file to a `.bcool` file. The `.bcool` file is compatible with `.mcool` files but requires less storage space.
 
-    Do not delete temporary files when finished.
+    .. code-block:: bash
 
-.. option:: --max-merge <max_merge>
+        polaris util cool2bcool [OPTIONS] MCOOL BCOOL
 
-    Maximum number of chunks to merge before invoking recursive merging  [default: 200]
+    .. rubric:: Required Arguments
 
-.. option:: --storage-options <storage_options>
+    .. option:: MCOOL: 
 
-    Options to modify the data filter pipeline. Provide as a comma-separated list of key-value pairs of the form 'k1=v1,k2=v2,...'. See http://docs.h5py.org/en/stable/high/dataset.html#fi
+        Path to the input ``.mcool`` file.
+
+    .. option:: BCOOL: 
+
+        Path of the ``.bcool`` file to save.
+
+    .. rubric:: Options
+
+    .. option:: -u <INTEGER> 
+
+        Default: ``3000000``
+
+        Distance upper bound in base pairs.
+
+    .. option:: --resol <TEXT>
+
+        Default: ``None``
+
+        Comma-separated resolutions for the output. If not specified, the resolutions of input file will be used.
+
+    .. option:: --help
+
+        Display help information about this command and exit.
+
+polaris util pileup
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The `pileup` utility generates 2D pileup contact maps around given foci.
+
+    .. code-block:: bash
+
+        polaris util pileup [OPTIONS] FOCI MCOOL
+
+    .. rubric:: Required Arguments
+
+    .. option:: FOCI: 
+
+        Path to the ``.bedpe`` file in the same format as Polaris output, containing loop loci.
+
+    .. option:: MCOOL: 
+
+        Path of the ``.mcool`` file.
+
+    .. rubric:: Options
+
+    .. option:: -w <INTEGER> 
+
+        Default: ``10``
+
+        Window size in bins: (2w+1)x(2w+1).
+
+    .. option:: --savefig <TEXT>
+
+        Default: ``FOCI_pileup.png``
+
+        Path to save pileup plot.
+
+    .. option:: --p2ll <BOOLEAN>
+
+        Default: ``False``
+
+        Compute p2ll value.
+
+    .. option:: --mindistance <INTEGER>
+
+        Default: ``2w+1``
+
+        Minimum distance in bins to skip, only for bedpe foci.
+
+    .. option:: --maxdistance <INTEGER>
+
+        Default: ``1e9``
+
+        Maximum distance in bins to skip, only for bedpe foci.
+
+    .. option:: --resol <INTEGER>
+
+        Default: ``5000``
+
+        Resolution.
+
+    .. option:: --oe <BOOLEAN>
+
+        Default: ``True``
+
+        Use O/E normalized contact map or not.
+
+    .. option:: --help
+
+        Display help information about this command and exit.

@@ -38,7 +38,7 @@ Quick Usage
 See:
 
 - Jupyter Notebook: `CLI walkthrough <xxx>`_
-- The `CLI Reference <xxx>`_ for more information.
+- The `CLI Reference <https://polairs-doc.readthedocs.io/en/latest/CLI_reference.html#>`_ for more information.
 
 Polaris takes submatrices of contact map as input and outputs predicted loops.
 
