@@ -344,3 +344,9 @@ The `pileup` utility generates 2D pileup contact maps around given foci.
    * - ``--help``
      - Show help message and exit.
      - None
+
+Contact
+-----------
+A `GitHub issue <https://github.com/compbiodsa/Polaris/issues/XYZ>`_ is preferable for all problems related to using Polaris. 
+
+For other concerns, please email Yusen Hou (yhou925@connect.hkust-gz.edu.cn).

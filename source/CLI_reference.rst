@@ -47,7 +47,7 @@ Choose a subcommand to predict loops directly or obtain loop score file first.
 polaris loop pred
 ------------------
 
-
+    This is the simplest approach, allowing to directly predict loops in a single step
     Bin any text file or stream of pairs.
 
     Pairs data need not be sorted. Accepts compressed files.
@@ -147,11 +147,4 @@ polaris loop pred
 
 .. option:: --storage-options <storage_options>
 
-    Options to modify the data filter pipeline. Provide as a comma-separated list of key-value pairs of the form 'k1=v1,k2=v2,...'. See http://docs.h5py.org/en/stable/high/dataset.html#filter-pipeline for more details.
-
-.. option:: -a, --append
-
-    Pass this flag to append the output cooler to an existing file instead of overwriting the file.
-
-
-----
+    Options to modify the data filter pipeline. Provide as a comma-separated list of key-value pairs of the form 'k1=v1,k2=v2,...'. See http://docs.h5py.org/en/stable/high/dataset.html#fi
