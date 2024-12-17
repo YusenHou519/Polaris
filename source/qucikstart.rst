@@ -11,7 +11,7 @@ We suggest users using `conda <https://anaconda.org/>`_ to create a virtual envi
 
 .. code-block:: bash
 
-   git clone https://github.com/BlanchetteLab/Polaris.git
+   git clone https://github.com/ai4nucleome/Polaris.git
    cd Polaris
    conda create -n polaris python=3.9
    conda activate polaris
@@ -35,7 +35,7 @@ The installation requires network access to download libraries. Usually, the ins
 Quick Usage
 -----------
 
-**See** `Jupyter Notebook CLI walkthrough <https://github.com/compbiodsa/Polaris/blob/master/example/CLI_walkthrough.ipynb>`_ **and the** `CLI Reference <https://polairs-doc.readthedocs.io/en/latest/CLI_reference.html#>`_ **for more information.**
+**See** `Jupyter Notebook CLI walkthrough <https://github.com/ai4nucleome/Polaris/blob/master/example/CLI_walkthrough.ipynb>`_ **and the** `CLI Reference <https://nucleome-polaris.readthedocs.io/en/latest/CLI_reference.html#>`_ **for more information.**
 
 Polaris takes submatrices of contact map as input and outputs predicted loops.
 

@@ -52,5 +52,5 @@ See the `Aggregate Peak Analysis tutorial`_ for detailed information.
    Aggregate peak analysis of bulk Hi-C (GM12878 with 250M validate read pairs at 5kb) (left) and aggregated scHi-C (400 mESCs) (right).
 
 
-.. _Loop Annotation tutorial: https://github.com/compbiodsa/Polaris/blob/master/example/loop_annotation/loop_annotation.ipynb
-.. _Aggregate Peak Analysis tutorial: https://github.com/compbiodsa/Polaris/blob/master/example/APA/APA_example.ipynb
+.. _Loop Annotation tutorial: https://github.com/ai4nucleome/Polaris/blob/master/example/loop_annotation/loop_annotation.ipynb
+.. _Aggregate Peak Analysis tutorial: https://github.com/ai4nucleome/Polaris/blob/master/example/APA/APA_example.ipynb
