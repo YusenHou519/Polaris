@@ -1,7 +1,7 @@
 What is Polaris?
 ================
 
-A Universal Tool for Chromatin Loop Annotation
+A Versatile Tool for Chromatin Loop Annotation
 ----------------------------------------------
 
 .. raw:: html
