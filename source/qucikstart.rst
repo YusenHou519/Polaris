@@ -4,27 +4,32 @@ Quickstart
 Installation
 ------------
 
-Polaris is developed and tested on Linux machines with python3.9 and relies on several libraries including pytorch, scipy, etc. 
-We **strongly recommend** that you install Polaris in a virtual environment.
+Polaris is developed and tested on Linux machines with python3.9 and relies on several libraries including pytorch, scipy, etc.
+We ​**strongly recommend** that you install Polaris in a virtual environment.
 
-We suggest users using [conda](https://anaconda.org/) to create a virtual environment for it (It should also work without using conda, i.e. with pip). You can run the command snippets below to install Polaris:
+We suggest users using `conda <https://anaconda.org/>`_ to create a virtual environment for it (It should also work without using conda, i.e. with pip). You can run the command snippets below to install Polaris:
 
-```bash
-git clone https://github.com/ai4nucleome/Polaris.git
-cd Polaris
-conda create -n polaris python=3.9
-conda activate polaris
-```
+.. code-block:: bash
+
+   git clone https://github.com/ai4nucleome/Polaris.git
+   cd Polaris
+   conda create -n polaris python=3.9
+   conda activate polaris
+
 -------
-Install Polaris:
-```bash
-./setup.sh
-```
-It will automatically download Polaris model's weights from [Hugging Face](https://huggingface.co/rr-ss/Polaris) and install Polaris.
 
-You can also download model's weights file manually from [there](https://huggingface.co/rr-ss/Polaris/resolve/main/polaris/model/sft_loop.pt?download=true) and put it in `Polaris/polaris/model` and change the file name to `sft_loop.pt`.
+Install Polaris:
+
+.. code-block:: bash
+
+   ./setup.sh
+
+It will automatically download Polaris model's weights from `Hugging Face <https://huggingface.co/rr-ss/Polaris>`_ and install Polaris.
+
+You can also download model's weights file manually from `there <https://huggingface.co/rr-ss/Polaris/resolve/main/polaris/model/sft_loop.pt?download=true>`_ and put it in ``Polaris/polaris/model`` and change the file name to ``sft_loop.pt``.
 
 The installation requires network access to download libraries. Usually, the installation will finish within 3 minutes. The installation time is longer if network access is slow and/or unstable.
+
 
 Quick Usage
 -----------
