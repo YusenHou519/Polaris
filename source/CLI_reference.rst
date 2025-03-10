@@ -40,6 +40,7 @@ Choose a subcommand to predict loops directly or obtain loop score file first.
 
   * .. object:: pred
   * .. object:: score
+  * .. object:: scorelf
   * .. object:: pool
 
 
@@ -67,71 +68,83 @@ polaris loop pred
 
     .. rubric:: Options
 
-    .. option:: --batchsize <int> 
+    .. option:: -b, --batchsize <int> 
 
         Default: ``128``
 
         Batch size for processing data. Adjust this based on available memory.
 
-    .. option:: --cpu <boolean> 
+    .. option:: -C, --cpu <boolean> 
 
         Default: ``False``
 
         Use CPU for computation. Set to ``True`` to force CPU usage.
 
-    .. option:: --gpu <text> 
+    .. option:: -G, --gpu <text> 
 
         Default: ``None``
 
         Comma-separated GPU indices to use. If not specified, GPUs will be auto-selected.
 
-    .. option:: --chrom <text>
+    .. option:: -c, --chrom <text>
 
         Default: ``None``
 
         Comma-separated list of chromosomes for loop calling. If not specified, all autosomes and chromosome X will be annotated.
 
-    .. option:: -t <int> 
+    .. option:: -nw, --workers <int> 
 
         Default: ``16``
 
         Number of CPU threads to use. Adjust for optimal performance on your system.
 
-    .. option:: --max_distance <int>
+    .. option:: -md, --max_distance <int>
 
         Default: ``3000000``
 
         Maximum genomic distance (in base pairs) between contact pairs to consider.
 
-    .. option:: --resol <int>
+    .. option:: -r, --resol <int>
 
         Default: ``5000``
 
         Resolution of the input contact map.
 
-    .. option:: --dc <int> 
+    .. option:: -dc, --distance_cutoff <int> 
 
         Default: ``5``
 
         Distance cutoff (in bins) for local density calculation. Larger values may account for more dispersed loops.
 
-    .. option:: --minscore <float> 
+    .. option:: -t, --threshold <float> 
 
         Default: ``0.6``
 
         Minimum loopScore threshold to consider a pixel as a loop candidate. Smaller values for more loops (Minimum value: 0.5).
 
-    .. option:: --radius <int> 
+    .. option:: -s, --sparsity <float> 
+
+        Default: ``0.9``
+
+        Allowed sparsity value of submatrices to send to model.
+
+    .. option:: -R, --radius <int> 
 
         Default: ``2``
 
         Radius for KDTree to remove outliers (in bins). Use larger values for sparser datasets.
 
-    .. option:: --mindelta <float> 
+    .. option:: -d, --mindelta <float> 
 
         Default: ``5``
 
         Minimum distance allowed between two predicted loops.
+
+    .. option:: --raw <boolean> 
+
+        Default: ``False``
+
+        Use raw matrix ['count'] or balanced matrix ['balanced'].
 
     .. option:: --help
 
@@ -159,47 +172,65 @@ polaris loop score
 
     .. rubric:: Options
 
-    .. option:: --batchsize <int> 
+    .. option:: -b, --batchsize <int> 
 
         Default: ``128``
 
         Batch size for processing data. Adjust this based on available memory.
 
-    .. option:: --cpu <boolean> 
+    .. option:: -C, --cpu <boolean> 
 
         Default: ``False``
 
         Use CPU for computation. Set to ``True`` to force CPU usage.
 
-    .. option:: --gpu <text> 
+    .. option:: -G, --gpu <text> 
 
         Default: ``None``
 
         Comma-separated GPU indices to use. If not specified, GPUs will be auto-selected.
 
-    .. option:: --chrom <text>
+    .. option:: -c, --chrom <text>
 
         Default: ``None``
 
         Comma-separated list of chromosomes for loop candidate scoring. If not specified, all autosomes and chromosome X will be annotated.
 
-    .. option:: -t <int> 
+    .. option:: -nw, --workers <int> 
 
         Default: ``16``
 
         Number of CPU threads to use. Adjust for optimal performance on your system.
 
-    .. option:: --max_distance <int>
+    .. option:: -md, --max_distance <int>
 
         Default: ``3000000``
 
         Maximum genomic distance (in base pairs) between contact pairs to consider.
 
-    .. option:: --resol <int>
+    .. option:: -r, --resol <int>
 
         Default: ``5000``
 
         Resolution of the Hi-C contact map (in base pairs).
+
+    .. option:: -t, --threshold <float> 
+
+        Default: ``0.6``
+
+        Minimum loopScore threshold to consider a pixel as a loop candidate. Smaller values for more loops (Minimum value: 0.5).
+
+    .. option:: -s, --sparsity <float> 
+
+        Default: ``0.9``
+
+        Allowed sparsity value of submatrices to send to model.
+
+    .. option:: --raw <boolean> 
+
+        Default: ``False``
+
+        Use raw matrix ['count'] or balanced matrix ['balanced'].
 
     .. option:: --help
 
@@ -229,41 +260,35 @@ polaris loop pool
 
     .. rubric:: Options
 
-    .. option:: --dc <int> 
+    .. option:: -dc, --distance_cutoff <int> 
 
         Default: ``5``
 
         Distance cutoff (in bins) for local density calculation. Larger values may account for more dispersed loops.
 
-    .. option:: --minscore <float> 
+    .. option:: -t, --threshold <float> 
 
         Default: ``0.6``
 
         Minimum loopScore threshold to consider a loop candidate as a valid loop.
 
-    .. option:: --resol <int>
+    .. option:: -r, --resol <int>
 
         Default: ``5000``
 
         Resolution of the Hi-C contact map (in base pairs).
 
-    .. option:: --radius <int> 
+    .. option:: -R, --radius <int> 
 
         Default: ``2``
 
         Radius for KDTree to remove outliers (in bins). Use larger values for sparser datasets.
 
-    .. option:: --mindelta <float> 
+    .. option:: -d, --mindelta <float> 
 
         Default: ``5``
 
         Minimum distance allowed between two predicted loops.
-
-    .. option:: --refine <boolean> 
-
-        Default: ``True``
-
-        Refine the predicted loops. It is recommended to always set this to ``True``.
 
     .. option:: --help
 
@@ -286,6 +311,7 @@ Utilities for analysis and visualization with ``.mcool`` files.
 
   * .. object:: cool2bcool
   * .. object:: pileup
+  * .. object:: depth
 
 ----
 
@@ -388,6 +414,48 @@ The `pileup` utility generates 2D pileup contact maps around given foci.
         Default: ``True``
 
         Use O/E normalized contact map or not.
+
+    .. option:: --help
+
+        Display help information about this command and exit.
+
+polaris util depth
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The `depth` utility calculates intra-chromosomal contacts with bin distance >= mindis.
+
+    .. code-block:: bash
+
+        polaris util depth -i [MCOOL] -r [RESOL]
+
+    .. rubric:: Required Arguments
+
+    .. option:: -i, --input:
+
+        Path to a ``.mcool`` contact map file.
+
+    .. option:: -r, --resol <int>
+
+        Resolution of the input contact map.
+
+    .. rubric:: Options
+
+    .. option:: --exclude-self <boolean> 
+
+        Whether exclude bin_diff=0 contacts
+
+    .. option:: -c, --chrom <text>
+
+        Default: ``None``
+
+        Comma-separated list of chromosomes for loop calling. If not specified, all autosomes and chromosome X will be annotated.
+
+    .. option:: -md, --mindis <int>
+
+        Default: ``0``
+
+        Min genomic distance in bins [0].
+
 
     .. option:: --help
 

@@ -7,30 +7,24 @@ Installation
 Polaris is developed and tested on Linux machines with python3.9 and relies on several libraries including pytorch, scipy, etc. 
 We **strongly recommend** that you install Polaris in a virtual environment.
 
-We suggest users using `conda <https://anaconda.org/>`_ to create a virtual environment for it (It should also work without using conda, i.e. with pip). You can run the command snippets below to install Polaris:
+We suggest users using [conda](https://anaconda.org/) to create a virtual environment for it (It should also work without using conda, i.e. with pip). You can run the command snippets below to install Polaris:
 
-.. code-block:: bash
-
-   git clone https://github.com/ai4nucleome/Polaris.git
-   cd Polaris
-   conda create -n polaris python=3.9
-   conda activate polaris
-
-Install `PyTorch <https://pytorch.org/get-started/locally/>`_ as described on their website. It might be the following command depending on your cuda version:
-
-.. code-block:: bash
-
-   pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cu121
-
+```bash
+git clone https://github.com/ai4nucleome/Polaris.git
+cd Polaris
+conda create -n polaris python=3.9
+conda activate polaris
+```
+-------
 Install Polaris:
+```bash
+./setup.sh
+```
+It will automatically download Polaris model's weights from [Hugging Face](https://huggingface.co/rr-ss/Polaris) and install Polaris.
 
-.. code-block:: bash
+You can also download model's weights file manually from [there](https://huggingface.co/rr-ss/Polaris/resolve/main/polaris/model/sft_loop.pt?download=true) and put it in `Polaris/polaris/model` and change the file name to `sft_loop.pt`.
 
-   pip install --use-pep517 --editable .
-
-If fail, please try ``python setup build`` and ``python setup install`` first.
-
-The installation requires network access to download libraries. Usually, the installation will finish within 5 minutes. The installation time is longer if network access is slow and/or unstable.
+The installation requires network access to download libraries. Usually, the installation will finish within 3 minutes. The installation time is longer if network access is slow and/or unstable.
 
 Quick Usage
 -----------

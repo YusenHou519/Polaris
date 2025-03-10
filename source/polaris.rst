@@ -99,9 +99,9 @@ Key Options:
 
 - ``-i, --input``: Path to a ``.mcool`` contact map file.
 - ``-o, --output``: Path to the ``.bedpe`` file where the predicted loops will be saved.
-- ``--chrom``: Specifies the chromosomes for loop calling, provided as a comma-separated string.
-- ``--batchsize``: Defines the batch size used for prediction. Adjust based on available computational resources.
-- ``--resol``: Resolution of the input contact map.
+- ``-c, --chrom``: Specifies the chromosomes for loop calling, provided as a comma-separated string.
+- ``-b, --batchsize``: Defines the batch size used for prediction. Adjust based on available computational resources.
+- ``-r, --resol``: Resolution of the input contact map.
 
 This command processes the input .mcool file and outputs the identified chromatin loops directly.
 
@@ -122,9 +122,9 @@ Key Options:
 
 - ``-i, --input``: Path to a ``.mcool`` contact map file.
 - ``-o, --output``: Path to the ``.bedpe`` file where the loop scores will be saved.
-- ``--chrom``: Specifies the chromosomes for loop calling, provided as a comma-separated string.
-- ``--batchsize``: Defines the batch size used for prediction. Adjust based on available computational resources.
-- ``--resol``: Resolution of the input contact map.
+- ``-c, --chrom``: Specifies the chromosomes for loop calling, provided as a comma-separated string.
+- ``-b, --batchsize``: Defines the batch size used for prediction. Adjust based on available computational resources.
+- ``-r, --resol``: Resolution of the input contact map.
 
 
 **Step 2: Call Loops from Loop Candidates**
@@ -139,7 +139,28 @@ Key Options:
 
 - ``-i, --input``: Path to the input loop candidates file.
 - ``-o, --output``: Path to the ``.bedpe`` file where the final loops will be saved.
-- ``--resol``: Resolution of the input file.
+- ``-r, --resol``: Resolution of the input file.
+
+
+⭐**Little function for very large, high coverage, and hight resolution mcool file**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For very large file, the above methods may cause out of memory problem. 
+
+Therefore, we provide a **Function that under Development** ``polaris loop scorelf`` for large file.
+
+
+You can run the code below for more information:
+.. code-block:: bash
+
+   polaris loop scorelf --help
+
+To annotate loops from contact map, you can run the code below:
+.. code-block:: bash
+
+   polaris loop scorelf -i [input.mcool] -o [loopscore.bedpe] [options]
+   polaris loop pool -i [loopscore.bedpe] -o [loops.bedpe] [options]
+
 
 polaris util
 ~~~~~~~~~~~~~~~~~
@@ -173,6 +194,20 @@ Key Arguments:
 
 - ``FOCI``: Path to the ``.bedpe`` file in the same format as Polaris output, containing loop loci.
 - ``MCOOL``: Path to the input ``.mcool`` file.
+
+polaris util depth
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The `depth` utility provides a very efficient way to calculate the coverage of a cool file.
+
+.. code-block:: bash
+
+   polaris util depth [OPTIONS] -i MCOOL -r RESOL
+
+Key Arguments:
+
+- ``MCOOL``: Path to the input ``.mcool`` file.
+- ``RESOL``: Resolution.
 
 Contact
 -----------
