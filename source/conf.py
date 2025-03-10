@@ -9,7 +9,7 @@
 project = 'Polaris'
 copyright = '2024, Yusen Hou, Yanlin Zhang'
 author = 'Yusen Hou, Yanlin Zhang'
-release = '1.0.0'
+release = '1.1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
