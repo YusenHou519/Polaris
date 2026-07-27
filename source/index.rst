@@ -11,7 +11,8 @@ Polaris
 
 Polaris is particularly well-suited for analyzing sparse scHi-C data and low-coverage datasets.
 
-Follow Polaris development on `GitHub <https://github.com/ai4nucleome/Polaris>`_.
+Visit the `Polaris project page <https://ai4nucleome.github.io/Polaris/>`_ for an overview of the method and key results,
+and follow Polaris development on `GitHub <https://github.com/ai4nucleome/Polaris>`_.
 
 Contents:
 
