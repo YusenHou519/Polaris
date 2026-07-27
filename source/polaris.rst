@@ -142,7 +142,7 @@ Key Options:
 - ``-r, --resol``: Resolution of the input file.
 
 
-⭐**Little function for very large, high coverage, and hight resolution mcool file**
+⭐**Little function for very large, high coverage, and high resolution mcool file**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For very large file, the above methods may cause out of memory problem. 

@@ -49,7 +49,7 @@ See the `Aggregate Peak Analysis tutorial`_ for detailed information.
    :height: 125px
    :align: center
 
-   Aggregate peak analysis of bulk Hi-C (GM12878 with 250M validate read pairs at 5kb) (left) and aggregated scHi-C (400 mESCs) (right).
+   Aggregate peak analysis of bulk Hi-C (GM12878 with 250M valid read pairs at 5kb) (left) and aggregated scHi-C (400 mESCs) (right).
 
 
 .. _Loop Annotation tutorial: https://github.com/ai4nucleome/Polaris/blob/master/example/loop_annotation/loop_annotation.ipynb
